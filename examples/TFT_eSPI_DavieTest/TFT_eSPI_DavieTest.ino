@@ -9,7 +9,7 @@
 
 
 #include "esp_arduino_version.h"
-
+#include "frames.h"
 #if ESP_ARDUINO_VERSION < ESP_ARDUINO_VERSION_VAL(3,0,0)
 
 #include <TFT_eSPI.h>   //https://github.com/Bodmer/TFT_eSPI
@@ -145,7 +145,13 @@ void loop()
     }
     panel.pushColors(0, 0, WIDTH, HEIGHT, (uint16_t *)spr.getPointer());
     delay(2000);
-
+    for (uint32_t j = 0; j < 50; j++) {
+        for (uint32_t i = 0; i < numberOfFrames; i++) {
+            memcpy(spr.getPointer(),frames[i],sizeof(frames[i]));
+            panel.pushColors(0, 0, WIDTH, HEIGHT, (uint16_t *)spr.getPointer());
+            delay(35);
+        }
+    }
     /*
     for (int y = 0; y < HEIGHT; y++) {
         for (int x = 0; x < WIDTH; x++) {
